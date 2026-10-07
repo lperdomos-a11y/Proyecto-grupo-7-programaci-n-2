@@ -1,0 +1,24 @@
+digraph UML {
+  graph [rankdir=LR, splines=ortho, nodesep=0.6, ranksep=0.9];
+  node [shape=record, fontname="Arial", fontsize=10];
+  edge [fontname="Arial", fontsize=9];
+
+  ItemVenta [label="{ItemVenta (abstracta)|- codigo: String\l- nombre: String\l- precio: BigDecimal\l- cantidad: int\l|+ getSubtotal(): BigDecimal\l+ calcularPuntos(): int\l+ getTipo(): String\l}"];
+  ProductoIndividual [label="{ProductoIndividual|- categoria: String\l|+ calcularPuntos(): int\l+ getTipo(): String\l}"];
+  MenuCompleto [label="{MenuCompleto|- idMenu: long\l|+ calcularPuntos(): int\l+ getTipo(): String\l}"];
+  Cliente [label="{Cliente|- id: long\l- identificador: String\l- nombre: String\l- telefono: String\l- correo: String\l- saldoPuntos: int\l- activo: boolean\l|+ getters/setters\l}"];
+  PedidoResumen [label="{PedidoResumen|id, cliente, fecha, estado, total, puntos|record}"];
+  Recompensa [label="{Recompensa|id, nombre, puntosNecesarios, tipoObjetivo, productoCodigo, idMenu|record}"];
+  ConexionDB [label="{ConexionDB|PROPS: Properties|+ conectar(): Connection\l}"];
+  Servicio [label="{ServicioRestaurante|+ clientes CRUD\l+ productos CRUD\l+ menús CRUD\l+ abastecer()\l+ crearPedido()\l+ pagarPedido()\l+ canjear()\l+ reportes()\l}"];
+  PrincipalFrame [label="{PrincipalFrame|JTabbedPane|Clientes\lProductos y menús\lInventario\lPedidos\lCobro\lFidelización\lReportes\l}"];
+
+  ProductoIndividual -> ItemVenta [arrowhead=empty, label="hereda"];
+  MenuCompleto -> ItemVenta [arrowhead=empty, label="hereda"];
+  Servicio -> ConexionDB [label="usa"];
+  Servicio -> Cliente [label="gestiona"];
+  Servicio -> ItemVenta [label="procesa"];
+  Servicio -> PedidoResumen [label="consulta"];
+  Servicio -> Recompensa [label="gestiona"];
+  PrincipalFrame -> Servicio [label="usa"];
+}

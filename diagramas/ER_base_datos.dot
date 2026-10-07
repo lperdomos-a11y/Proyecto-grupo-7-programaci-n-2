@@ -1,0 +1,31 @@
+digraph ER {
+  graph [rankdir=LR, splines=polyline, nodesep=0.45, ranksep=0.8];
+  node [shape=record, fontname="Arial", fontsize=9];
+  edge [fontname="Arial", fontsize=8];
+
+  clientes [label="{CLIENTES|PK id_cliente\lUQ identificador\lnombre\ltelefono\lcorreo\lsaldo_puntos\lactivo\lfecha_registro\l}"];
+  productos [label="{PRODUCTOS|PK codigo\lcategoria\lnombre\lprecio\lexistencia\lactivo\l}"];
+  menus [label="{MENUS|PK id_menu\lUQ codigo\lnombre\lprecio\lactivo\l}"];
+  menu_componentes [label="{MENU_COMPONENTES|PK/FK id_menu\lPK/FK producto_codigo\lcantidad\l}"];
+  pedidos [label="{PEDIDOS|PK id_pedido\lFK id_cliente\lfecha\lestado\ltotal\lpuntos_generados\l}"];
+  detalle [label="{DETALLE_PEDIDO|PK id_detalle\lFK id_pedido\ltipo_item\lFK producto_codigo\lFK id_menu\ldescripcion\lcantidad\lprecio_unitario\lsubtotal\lpuntos\l}"];
+  pagos [label="{PAGOS|PK id_pago\lUQ/FK id_pedido\lfecha\lmetodo\lmonto\ldinero_recibido\lcambio\lreferencia\laprobado\l}"];
+  movinv [label="{MOVIMIENTOS_INVENTARIO|PK id_movimiento\lFK producto_codigo\lfecha\lcantidad\ltipo\lreferencia\l}"];
+  recompensas [label="{RECOMPENSAS|PK id_recompensa\lnombre\lpuntos_necesarios\ltipo_objetivo\lFK producto_codigo\lFK id_menu\lactivo\l}"];
+  movpts [label="{MOVIMIENTOS_PUNTOS|PK id_movimiento\lFK id_cliente\lfecha\ltipo\lreferencia\lpuntos\l}"];
+  canjes [label="{CANJES|PK id_canje\lFK id_cliente\lFK id_recompensa\lfecha\lpuntos_utilizados\l}"];
+
+  clientes -> pedidos [label="1:N"];
+  pedidos -> detalle [label="1:N"];
+  pedidos -> pagos [label="1:0..1"];
+  productos -> detalle [label="1:N opcional"];
+  menus -> detalle [label="1:N opcional"];
+  menus -> menu_componentes [label="1:N"];
+  productos -> menu_componentes [label="1:N"];
+  productos -> movinv [label="1:N"];
+  clientes -> movpts [label="1:N"];
+  clientes -> canjes [label="1:N"];
+  recompensas -> canjes [label="1:N"];
+  productos -> recompensas [label="1:N opcional"];
+  menus -> recompensas [label="1:N opcional"];
+}

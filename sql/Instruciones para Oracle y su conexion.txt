@@ -1,0 +1,48 @@
+CONFIGURACIÓN ORACLE - PAN PUNTOS Y PREMIOS
+
+1. Abrir Oracle SQL Developer.
+
+2. Crear/usar conexión SYSTEM:
+
+Nombre: SYSTEM_XE
+Usuario: system
+Contraseña: la contraseña que cada uno puso al instalar Oracle
+Host: localhost
+Puerto: 1521
+SID: xe
+
+3. Desde SYSTEM_XE ejecutar:
+01_CONFIGURAR_PPP_DESDE_SYSTEM_XE.sql
+
+4. Crear una nueva conexión:
+
+Nombre: PPP
+Usuario: PPP
+Contraseña: PPP123
+Host: localhost
+Puerto: 1521
+Nombre del Servicio: XEPDB1
+
+5. Presionar PROBAR.
+Debe aparecer:
+Estado: Correcto
+
+6. Conectarse como PPP.
+
+7. Desde PPP ejecutar:
+02_esquema_y_datos.sql
+
+8. Después abrir NetBeans.
+
+9. Abrir el proyecto PanPuntosPremios.
+
+10. Ejecutar:
+Clean and Build
+Run
+
+CONEXIÓN QUE UTILIZA JAVA:
+
+jdbc:oracle:thin:@//localhost:1521/XEPDB1
+
+Usuario: PPP
+Contraseña: PPP123
